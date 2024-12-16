@@ -3,11 +3,13 @@ import 'package:clfl/features/feature_get_posts/data/repositories/repository.dar
 import 'package:clfl/features/feature_get_posts/domain/usecases/get_post_usecase.dart';
 import 'package:clfl/features/feature_get_posts/presentation/bloc/remote/bloc/remote_posts_bloc.dart';
 import 'package:clfl/features/feature_get_posts/presentation/pages/home_page.dart';
+import 'package:clfl/injection_container.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+Future<void> main() async {
+  await initilizeDependencies();
   runApp(const MyApp());
 }
 
@@ -23,15 +25,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: BlocProvider<RemotePostsBloc>(
-        create: (context) => RemotePostsBloc(
-          getPostsUseCase: GetPostsUseCase(
-            postsRepository: PostsRepositoryImplementation(
-              apiService: PostsApiService(
-                Dio(),
-              ),
-            ),
-          ),
-        )..add(OnGetPostsEvent()),
+        create: (context) => di()..add(OnGetPostsEvent()),
         child: const HomePage(),
       ),
     );
