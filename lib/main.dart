@@ -1,5 +1,11 @@
+import 'package:clfl/features/feature_get_posts/data/data_source/remote/get_posts_api_service.dart';
+import 'package:clfl/features/feature_get_posts/data/repositories/repository.dart';
+import 'package:clfl/features/feature_get_posts/domain/usecases/get_post_usecase.dart';
+import 'package:clfl/features/feature_get_posts/presentation/bloc/remote/bloc/remote_posts_bloc.dart';
 import 'package:clfl/features/feature_get_posts/presentation/pages/home_page.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +22,18 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: BlocProvider<RemotePostsBloc>(
+        create: (context) => RemotePostsBloc(
+          getPostsUseCase: GetPostsUseCase(
+            postsRepository: PostsRepositoryImplementation(
+              apiService: PostsApiService(
+                Dio(),
+              ),
+            ),
+          ),
+        ),
+        child: const HomePage(),
+      ),
     );
   }
 }
