@@ -24,12 +24,12 @@ class _PostsApiService implements PostsApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<PostsModel>> getPosts() async {
+  Future<HttpResponse<List<PostsModel>>> getPosts() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<PostsModel>>(Options(
+    final _options = _setStreamType<HttpResponse<List<PostsModel>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -55,7 +55,8 @@ class _PostsApiService implements PostsApiService {
       errorLogger?.logError(e, s, _options);
       rethrow;
     }
-    return _value;
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
