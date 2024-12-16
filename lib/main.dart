@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
-        ),
+        )..add(OnGetPostsEvent()),
         child: const HomePage(),
       ),
     );

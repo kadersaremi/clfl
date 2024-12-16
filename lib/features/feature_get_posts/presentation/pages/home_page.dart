@@ -43,31 +43,47 @@ class HomePage extends StatelessWidget {
             return SizedBox(
               height: MediaQuery.sizeOf(context).height,
               width: MediaQuery.sizeOf(context).width,
-              child: ListView.builder(itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.amber[100],
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        state.posts![index].id.toString(),
+              child: ListView.builder(
+                  itemCount: state.posts!.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.amber[100],
+                        borderRadius: BorderRadius.circular(13),
                       ),
-                      Text(
-                        state.posts![index].title.toString(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 10,
+                        children: [
+                          Text(
+                            state.posts![index].id.toString(),
+                          ),
+                          Text(
+                            state.posts![index].title.toString(),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            state.posts![index].body.toString(),
+                          ),
+                        ],
                       ),
-                      Text(
-                        state.posts![index].body.toString(),
-                      ),
-                    ],
-                  ),
-                );
-              }),
+                    );
+                  }),
             );
           } else {
             return const Center(
-              child: Text('Error'),
+              child: Center(
+                child: Column(
+                  children: [
+                    CircularProgressIndicator(
+                      backgroundColor: Colors.red,
+                    ),
+                  ],
+                ),
+              ),
             );
           }
         },

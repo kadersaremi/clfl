@@ -2,16 +2,11 @@ import 'package:clfl/features/feature_get_posts/domain/entities/entities.dart';
 
 class PostsModel extends PostEntities {
   const PostsModel({
-    required int userId,
-    required int id,
-    required String title,
-    required String body,
-  }) : super(
-          userId: userId,
-          id: id,
-          title: title,
-          body: body,
-        );
+    required super.userId,
+    required super.id,
+    required super.title,
+    required super.body,
+  });
 
   factory PostsModel.fromJson(Map<String, dynamic> json) => PostsModel(
         userId: json['userId'],
